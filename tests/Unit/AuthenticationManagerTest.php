@@ -10,6 +10,7 @@ use Bleicker\Session\Session;
 use Bleicker\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Bleicker\Authentication\Unit\Fixtures\FailingToken;
+use Tests\Bleicker\Authentication\Unit\Fixtures\NoCredentialsToken;
 use Tests\Bleicker\Authentication\Unit\Fixtures\SuccessSessionToken;
 use Tests\Bleicker\Authentication\Unit\Fixtures\SuccessToken;
 use Tests\Bleicker\Authentication\UnitTestCase;
@@ -38,6 +39,7 @@ class AuthenticationManagerTest extends UnitTestCase {
 	public function runTest() {
 		TokenManager::registerPrototypeToken(SuccessToken::class, new SuccessToken());
 		TokenManager::registerPrototypeToken(FailingToken::class, new FailingToken());
+		TokenManager::registerPrototypeToken(NoCredentialsToken::class, new NoCredentialsToken());
 		TokenManager::registerSessionToken(SuccessSessionToken::class, new SuccessSessionToken());
 
 		$authenticationManager = new AuthenticationManager();
@@ -45,6 +47,7 @@ class AuthenticationManagerTest extends UnitTestCase {
 
 		$this->assertEquals(TokenInterface::AUTHENTICATION_SUCCESS, TokenManager::getPrototypeToken(SuccessToken::class)->getStatus(), 'Authentication Success');
 		$this->assertEquals(TokenInterface::AUTHENTICATION_FAILED, TokenManager::getPrototypeToken(FailingToken::class)->getStatus(), 'Authentication Failed');
+		$this->assertEquals(TokenInterface::AUTHENTICATION_NOCREDENTIALSGIVEN, TokenManager::getPrototypeToken(NoCredentialsToken::class)->getStatus(), 'No credentials given');
 		$this->assertEquals(TokenInterface::AUTHENTICATION_SUCCESS, TokenManager::getSessionToken(SuccessSessionToken::class)->getStatus(), 'Authentication Failed');
 	}
 }
