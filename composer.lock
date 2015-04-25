@@ -4,15 +4,21 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "28372811435e5300d77deaf738c0c694",
+    "hash": "d55cefac3734c55ff42c61269b67c1f9",
     "packages": [
         {
             "name": "bleicker/exception",
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:cbleicker/bleicker-exception.git",
-                "reference": "35cb95105fd045e5e9cc12bf52a06d874f82957b"
+                "url": "https://github.com/pumatertion/bleicker.exception.git",
+                "reference": "dbf4f68b35189b07eb8c546093015e28dccaaaee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pumatertion/bleicker.exception/zipball/dbf4f68b35189b07eb8c546093015e28dccaaaee",
+                "reference": "dbf4f68b35189b07eb8c546093015e28dccaaaee",
+                "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -23,6 +29,7 @@
                     "Bleicker\\Exception\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Carsten Bleicker",
@@ -33,11 +40,17 @@
         },
         {
             "name": "bleicker/objectmanager",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:cbleicker/bleicker-objectmanager.git",
-                "reference": "27c474e96abe698e39a07bdd0ad71347bd6e1fe9"
+                "url": "https://github.com/pumatertion/bleicker.objectmanager.git",
+                "reference": "d3da0cf4e1a0121e53dabdd14bfbc67e54e06c74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pumatertion/bleicker.objectmanager/zipball/d3da0cf4e1a0121e53dabdd14bfbc67e54e06c74",
+                "reference": "d3da0cf4e1a0121e53dabdd14bfbc67e54e06c74",
+                "shasum": ""
             },
             "require": {
                 "bleicker/exception": "~1.0"
@@ -51,26 +64,28 @@
                     "Bleicker\\ObjectManager\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\Bleicker\\ObjectManager\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Carsten Bleicker",
                     "email": "carsten@bleicker.de"
                 }
             ],
-            "time": "2015-04-24 14:32:00"
+            "time": "2015-04-25 20:32:11"
         },
         {
             "name": "bleicker/session",
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:cbleicker/bleicker-session.git",
+                "url": "https://github.com/pumatertion/bleicker.session.git",
                 "reference": "dde2c90569e05a471856047664a944ac9062061f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pumatertion/bleicker.session/zipball/dde2c90569e05a471856047664a944ac9062061f",
+                "reference": "dde2c90569e05a471856047664a944ac9062061f",
+                "shasum": ""
             },
             "require": {
                 "symfony/http-foundation": "~2.6"
@@ -84,11 +99,7 @@
                     "Bleicker\\Session\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\Bleicker\\Session\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Carsten Bleicker",
@@ -99,11 +110,17 @@
         },
         {
             "name": "bleicker/token",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:cbleicker/bleicker-token.git",
-                "reference": "ac37114eaedd409eed283e657d465270026798a3"
+                "url": "https://github.com/pumatertion/bleicker.token.git",
+                "reference": "03a87a71cf5c4fd20e1806fe30e9aec0d73b6e6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pumatertion/bleicker.token/zipball/03a87a71cf5c4fd20e1806fe30e9aec0d73b6e6f",
+                "reference": "03a87a71cf5c4fd20e1806fe30e9aec0d73b6e6f",
+                "shasum": ""
             },
             "require": {
                 "bleicker/objectmanager": "~1.0",
@@ -118,18 +135,14 @@
                     "Bleicker\\Token\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\Bleicker\\Token\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Carsten Bleicker",
                     "email": "carsten@bleicker.de"
                 }
             ],
-            "time": "2015-04-25 17:54:26"
+            "time": "2015-04-25 20:38:11"
         },
         {
             "name": "symfony/http-foundation",
