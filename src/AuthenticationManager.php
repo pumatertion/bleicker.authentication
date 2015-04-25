@@ -38,12 +38,14 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 
 		/** @var SessionTokenInterface $token */
 		foreach ($this->tokenManager->getSessionTokens() as $token) {
-			$token->injectCredentialsAndSetStatus()->authenticate();
+			call_user_func_array(array($token, 'injectCredentialsAndSetStatus'), func_get_args());
+			$token->authenticate();
 		}
 
 		/** @var PrototypeTokenInterface $token */
 		foreach ($this->tokenManager->getPrototypeTokens() as $token) {
-			$token->injectCredentialsAndSetStatus()->authenticate();
+			call_user_func_array(array($token, 'injectCredentialsAndSetStatus'), func_get_args());
+			$token->authenticate();
 		}
 
 		return $this;
