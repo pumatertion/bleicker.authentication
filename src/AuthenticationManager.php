@@ -13,7 +13,7 @@ use Bleicker\Token\TokenManagerInterface;
  *
  * @package Bleicker\Authentication
  */
-class AuthenticationManager {
+class AuthenticationManager implements AuthenticationManagerInterface {
 
 	/**
 	 * @var TokenManagerInterface
