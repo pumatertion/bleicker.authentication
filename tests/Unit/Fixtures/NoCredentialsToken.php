@@ -2,14 +2,14 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
-use Bleicker\Token\AbstractToken;
+use Bleicker\Token\AbstractPrototypeToken;
 
 /**
  * Class NoCredentialsToken
  *
  * @package Tests\Bleicker\Authentication\Unit\Fixtures
  */
-class NoCredentialsToken extends AbstractToken {
+class NoCredentialsToken extends AbstractPrototypeToken {
 
 	/**
 	 * @return $this

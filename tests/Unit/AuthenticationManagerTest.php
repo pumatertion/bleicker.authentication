@@ -3,7 +3,7 @@
 namespace Tests\Bleicker\Authentication\Unit;
 
 use Bleicker\Authentication\AuthenticationManager;
-use Bleicker\Token\TokenInterface;
+use Bleicker\Token\PrototypeTokenInterface;
 use Bleicker\Token\TokenManager;
 use Bleicker\ObjectManager\ObjectManager;
 use Bleicker\Session\Session;
@@ -46,9 +46,9 @@ class AuthenticationManagerTest extends UnitTestCase {
 
 		$authenticationManager->run();
 
-		$this->assertEquals(TokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getPrototypeToken(SuccessToken::class)->getStatus(), 'Authentication Success');
-		$this->assertEquals(TokenInterface::AUTHENTICATION_FAILED, $authenticationManager->getTokenManager()->getPrototypeToken(FailingToken::class)->getStatus(), 'Authentication Failed');
-		$this->assertEquals(TokenInterface::AUTHENTICATION_NOCREDENTIALSGIVEN, $authenticationManager->getTokenManager()->getPrototypeToken(NoCredentialsToken::class)->getStatus(), 'No credentials given');
-		$this->assertEquals(TokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getSessionToken(SuccessSessionToken::class)->getStatus(), 'Authentication Failed');
+		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getPrototypeToken(SuccessToken::class)->getStatus(), 'Authentication Success');
+		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_FAILED, $authenticationManager->getTokenManager()->getPrototypeToken(FailingToken::class)->getStatus(), 'Authentication Failed');
+		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_NOCREDENTIALSGIVEN, $authenticationManager->getTokenManager()->getPrototypeToken(NoCredentialsToken::class)->getStatus(), 'No credentials given');
+		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getSessionToken(SuccessSessionToken::class)->getStatus(), 'Authentication Failed');
 	}
 }

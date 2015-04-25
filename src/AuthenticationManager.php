@@ -5,7 +5,7 @@ namespace Bleicker\Authentication;
 use Bleicker\ObjectManager\ObjectManager;
 use Bleicker\Token\TokenManager;
 use Bleicker\Token\SessionTokenInterface;
-use Bleicker\Token\TokenInterface;
+use Bleicker\Token\PrototypeTokenInterface;
 use Bleicker\Token\TokenManagerInterface;
 
 /**
@@ -41,7 +41,7 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 			$token->injectCredentialsAndSetStatus()->authenticate();
 		}
 
-		/** @var TokenInterface $token */
+		/** @var PrototypeTokenInterface $token */
 		foreach ($this->tokenManager->getPrototypeTokens() as $token) {
 			$token->injectCredentialsAndSetStatus()->authenticate();
 		}

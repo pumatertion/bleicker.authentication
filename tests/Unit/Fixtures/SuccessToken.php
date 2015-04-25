@@ -2,14 +2,14 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
-use Bleicker\Token\AbstractToken;
+use Bleicker\Token\AbstractPrototypeToken;
 
 /**
  * Class SuccessToken
  *
  * @package Tests\Bleicker\Authentication\Unit\Fixtures
  */
-class SuccessToken extends AbstractToken {
+class SuccessToken extends AbstractPrototypeToken {
 
 	/**
 	 * @return $this
