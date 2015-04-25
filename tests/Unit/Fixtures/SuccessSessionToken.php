@@ -2,7 +2,7 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
-use Bleicker\Authentication\AbstractSessionToken;
+use Bleicker\Token\AbstractSessionToken;
 
 /**
  * Class SuccessSessionToken

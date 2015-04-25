@@ -3,6 +3,9 @@
 namespace Bleicker\Authentication;
 
 use Bleicker\ObjectManager\ObjectManager;
+use Bleicker\Token\TokenManager;
+use Bleicker\Token\SessionTokenInterface;
+use Bleicker\Token\TokenInterface;
 
 /**
  * Class AuthenticationManager
@@ -15,10 +18,17 @@ class AuthenticationManager {
 	 * @return $this
 	 */
 	public function run() {
-		/** @var TokenInterface $token */
-		foreach (TokenManager::getTokens() as $token) {
+
+		/** @var SessionTokenInterface $token */
+		foreach (TokenManager::getSessionTokens() as $token) {
 			$token->injectCredentialsAndSetStatus()->authenticate();
 		}
+
+		/** @var TokenInterface $token */
+		foreach (TokenManager::getPrototypeTokens() as $token) {
+			$token->injectCredentialsAndSetStatus()->authenticate();
+		}
+
 		return $this;
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
-use Bleicker\Authentication\AbstractToken;
+use Bleicker\Token\AbstractToken;
 
 /**
  * Class FailingToken
