@@ -1,0 +1,35 @@
+{
+	"name": "bleicker/authentication",
+	"require": {
+		"bleicker/objectmanager": "~1.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
+	"authors": [
+		{
+			"name": "Carsten Bleicker",
+			"email": "carsten@bleicker.de"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Bleicker\\Authentication\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\Bleicker\\Authentication\\": "tests"
+		}
+	},
+	"repositories": [
+		{
+			"type": "git",
+			"url": "git@bitbucket.org:cbleicker/bleicker-objectmanager.git"
+		},
+		{
+			"type": "git",
+			"url": "git@bitbucket.org:cbleicker/bleicker-exception.git"
+		}
+	]
+}
