@@ -3,16 +3,11 @@
 namespace Tests\Bleicker\Authentication\Unit;
 
 use Bleicker\Authentication\AuthenticationManager;
-use Bleicker\Token\PrototypeTokenInterface;
-use Bleicker\Token\TokenManager;
+use Bleicker\Authentication\AuthenticationManagerInterface;
 use Bleicker\ObjectManager\ObjectManager;
-use Bleicker\Session\Session;
-use Bleicker\Session\SessionInterface;
-use Bleicker\Token\TokenManagerInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Bleicker\Token\TokenInterface;
 use Tests\Bleicker\Authentication\Unit\Fixtures\FailingToken;
-use Tests\Bleicker\Authentication\Unit\Fixtures\NoCredentialsToken;
-use Tests\Bleicker\Authentication\Unit\Fixtures\SuccessSessionToken;
+use Tests\Bleicker\Authentication\Unit\Fixtures\NoCredentialToken;
 use Tests\Bleicker\Authentication\Unit\Fixtures\SuccessToken;
 use Tests\Bleicker\Authentication\UnitTestCase;
 
@@ -24,31 +19,31 @@ use Tests\Bleicker\Authentication\UnitTestCase;
 class AuthenticationManagerTest extends UnitTestCase {
 
 	/**
-	 * @var SessionInterface
+	 * @var AuthenticationManagerInterface
 	 */
-	protected $session;
+	protected $authenticationManager;
 
 	protected function setUp() {
 		parent::setUp();
-		ObjectManager::register(SessionInterface::class, new Session(new MockArraySessionStorage()));
-		ObjectManager::register(TokenManagerInterface::class, new TokenManager());
+		$this->authenticationManager = ObjectManager::get(AuthenticationManagerInterface::class, function () {
+			$authenticationManager = new AuthenticationManager();
+			ObjectManager::add(AuthenticationManagerInterface::class, $authenticationManager, TRUE);
+			return $authenticationManager;
+		});
 	}
 
 	/**
 	 * @test
 	 */
 	public function runTest() {
-		$authenticationManager = new AuthenticationManager();
-		$authenticationManager->getTokenManager()->registerPrototypeToken(SuccessToken::class, new SuccessToken());
-		$authenticationManager->getTokenManager()->registerPrototypeToken(FailingToken::class, new FailingToken());
-		$authenticationManager->getTokenManager()->registerPrototypeToken(NoCredentialsToken::class, new NoCredentialsToken());
-		$authenticationManager->getTokenManager()->registerSessionToken(SuccessSessionToken::class, new SuccessSessionToken());
+		$successToken = SuccessToken::register(SuccessToken::class);
+		$noCredentialToken = NoCredentialToken::register(NoCredentialToken::class);
+		$failingToken = FailingToken::register(FailingToken::class);
 
-		$authenticationManager->run();
+		$this->authenticationManager->run();
 
-		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getPrototypeToken(SuccessToken::class)->getStatus(), 'Authentication Success');
-		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_FAILED, $authenticationManager->getTokenManager()->getPrototypeToken(FailingToken::class)->getStatus(), 'Authentication Failed');
-		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_NOCREDENTIALSGIVEN, $authenticationManager->getTokenManager()->getPrototypeToken(NoCredentialsToken::class)->getStatus(), 'No credentials given');
-		$this->assertEquals(PrototypeTokenInterface::AUTHENTICATION_SUCCESS, $authenticationManager->getTokenManager()->getSessionToken(SuccessSessionToken::class)->getStatus(), 'Authentication Failed');
+		$this->assertEquals(TokenInterface::AUTHENTICATION_SUCCESS, $successToken->getStatus());
+		$this->assertEquals(TokenInterface::AUTHENTICATION_NOT_REQUIRED, $noCredentialToken->getStatus());
+		$this->assertEquals(TokenInterface::AUTHENTICATION_FAILED, $failingToken->getStatus());
 	}
 }
