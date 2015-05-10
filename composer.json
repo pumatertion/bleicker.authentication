@@ -2,9 +2,8 @@
 	"name": "bleicker/authentication",
 	"type": "library",
 	"require": {
-		"bleicker/objectmanager": "~1.0",
-		"bleicker/token": "~1.0",
-		"bleicker/session": "~1.0"
+		"bleicker/token": "2.0.*",
+		"bleicker/session": "1.0.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*"

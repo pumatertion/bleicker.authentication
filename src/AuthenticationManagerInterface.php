@@ -1,7 +1,7 @@
 <?php
 namespace Bleicker\Authentication;
 
-use Bleicker\Token\TokenManagerInterface;
+use Bleicker\Token\TokensInterface;
 
 /**
  * Interface AuthenticationManager
@@ -16,7 +16,7 @@ interface AuthenticationManagerInterface {
 	public function run();
 
 	/**
-	 * @return TokenManagerInterface
+	 * @return TokensInterface
 	 */
-	public function getTokenManager();
+	public function getTokens();
 }
