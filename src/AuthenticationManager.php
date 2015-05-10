@@ -3,11 +3,9 @@
 namespace Bleicker\Authentication;
 
 use Bleicker\ObjectManager\ObjectManager;
-use Bleicker\Token\TokenManager;
-use Bleicker\Token\SessionTokenInterface;
-use Bleicker\Token\PrototypeTokenInterface;
-use Bleicker\Token\TokenManagerInterface;
-
+use Bleicker\Token\TokensInterface;
+use Bleicker\Token\Tokens;
+use Bleicker\Token\TokenInterface;
 /**
  * Class AuthenticationManager
  *
@@ -16,38 +14,33 @@ use Bleicker\Token\TokenManagerInterface;
 class AuthenticationManager implements AuthenticationManagerInterface {
 
 	/**
-	 * @var TokenManagerInterface
+	 * @var TokensInterface
 	 */
-	protected $tokenManager;
+	protected $tokens;
 
 	public function __construct(){
-		$this->tokenManager = ObjectManager::get(TokenManagerInterface::class);
+		$this->tokens = ObjectManager::get(TokensInterface::class, function(){
+			$tokens = new Tokens();
+			ObjectManager::add(TokensInterface::class, $tokens, TRUE);
+			return $tokens;
+		});
 	}
 
 	/**
-	 * @return TokenManagerInterface
+	 * @return TokensInterface
 	 */
-	public function getTokenManager() {
-		return $this->tokenManager;
+	public function getTokens() {
+		return $this->tokens;
 	}
 
 	/**
 	 * @return $this
 	 */
 	public function run() {
-
-		/** @var SessionTokenInterface $token */
-		foreach ($this->tokenManager->getSessionTokens() as $token) {
-			call_user_func_array(array($token, 'injectCredentialsAndSetStatus'), func_get_args());
+		/** @var TokenInterface $token */
+		foreach ($this->tokens->storage() as $token) {
 			$token->authenticate();
 		}
-
-		/** @var PrototypeTokenInterface $token */
-		foreach ($this->tokenManager->getPrototypeTokens() as $token) {
-			call_user_func_array(array($token, 'injectCredentialsAndSetStatus'), func_get_args());
-			$token->authenticate();
-		}
-
 		return $this;
 	}
 }
