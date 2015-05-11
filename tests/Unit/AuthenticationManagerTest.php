@@ -101,5 +101,12 @@ class AuthenticationManagerTest extends UnitTestCase {
 
 		$this->assertFalse($this->authenticationManager->hasRole('Admin'));
 		$this->assertFalse($this->authenticationManager->hasRole('RoleBySession'));
+
+		/** @var TokenInterface $token */
+		foreach (Tokens::storage() as $token) {
+			$this->assertNull($token->getCredential()->getValue(), 'Not password exists after logout for ' . get_class($token));
+			$this->assertNull($token->getCredential()->getAccount(), 'Not account exists after logout for ' . get_class($token));
+			$this->assertEquals(TokenInterface::AUTHENTICATION_NOT_REQUIRED, $token->getStatus(), 'Status reset after logout for ' . get_class($token));
+		}
 	}
 }
