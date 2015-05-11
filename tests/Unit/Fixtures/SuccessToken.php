@@ -2,6 +2,8 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
+use Bleicker\Account\Account;
+use Bleicker\Account\Role;
 use Bleicker\Token\AbstractToken;
 
 /**
@@ -12,16 +14,21 @@ use Bleicker\Token\AbstractToken;
 class SuccessToken extends AbstractToken {
 
 	/**
-	 * @return void
+	 * @return $this
 	 */
 	public function injectCredential() {
-		$this->credential = 'foo';
+		$this->getCredential()->setValue('foo');
+		return $this;
 	}
 
 	/**
-	 * @return boolean
+	 * @return $this
 	 */
-	public function isCredentialValid() {
-		return $this->getCredential() === 'foo';
+	public function fetchAndSetAccount() {
+		$role = new Role('Admin');
+		$account = new Account('john');
+		$account->addRole($role);
+		$this->getCredential()->setAccount($account);
+		return $this;
 	}
 }

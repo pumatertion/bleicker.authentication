@@ -1,7 +1,7 @@
 <?php
 namespace Bleicker\Authentication;
 
-use Bleicker\Token\TokensInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Interface AuthenticationManager
@@ -16,7 +16,17 @@ interface AuthenticationManagerInterface {
 	public function run();
 
 	/**
-	 * @return TokensInterface
+	 * @return Collection
 	 */
 	public function getTokens();
+
+	/**
+	 * @return Collection
+	 */
+	public function getAccounts();
+
+	/**
+	 * @return Collection
+	 */
+	public function getRoles();
 }

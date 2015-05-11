@@ -2,20 +2,20 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
-use Bleicker\Token\AbstractToken;
+use Bleicker\Account\AccountInterface;
+use Bleicker\Token\AbstractSessionToken;
 
 /**
- * Class FailingToken
+ * Class SessionNotExistsToken
  *
  * @package Tests\Bleicker\Authentication\Unit\Fixtures
  */
-class FailingToken extends AbstractToken {
+class SessionNotExistsToken extends AbstractSessionToken {
 
 	/**
 	 * @return $this
 	 */
 	public function injectCredential() {
-		$this->getCredential()->setValue('foo');
 		return $this;
 	}
 
@@ -23,7 +23,13 @@ class FailingToken extends AbstractToken {
 	 * @return $this
 	 */
 	public function fetchAndSetAccount() {
-		$this->getCredential()->setAccount();
 		return $this;
+	}
+
+	/**
+	 * @return AccountInterface
+	 */
+	public function reconstituteAccountFromSession() {
+		return NULL;
 	}
 }
