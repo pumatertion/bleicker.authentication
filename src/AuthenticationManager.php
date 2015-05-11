@@ -32,6 +32,15 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	}
 
 	/**
+	 * @param TokenInterface $token
+	 * @return $this
+	 */
+	public function logout(TokenInterface $token) {
+		$token->logout();
+		return $this;
+	}
+
+	/**
 	 * @return Collection
 	 */
 	public function getTokens() {

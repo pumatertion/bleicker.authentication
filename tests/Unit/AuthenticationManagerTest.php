@@ -7,6 +7,7 @@ use Bleicker\Authentication\AuthenticationManager;
 use Bleicker\Authentication\AuthenticationManagerInterface;
 use Bleicker\ObjectManager\ObjectManager;
 use Bleicker\Token\TokenInterface;
+use Bleicker\Token\Tokens;
 use Tests\Bleicker\Authentication\Unit\Fixtures\FailingToken;
 use Tests\Bleicker\Authentication\Unit\Fixtures\NoCredentialToken;
 use Tests\Bleicker\Authentication\Unit\Fixtures\SessionExistsToken;
@@ -33,12 +34,18 @@ class AuthenticationManagerTest extends UnitTestCase {
 			ObjectManager::add(AuthenticationManagerInterface::class, $authenticationManager, TRUE);
 			return $authenticationManager;
 		});
+		Tokens::prune();
+	}
+
+	protected function tearDown() {
+		parent::tearDown();
+		Tokens::prune();
 	}
 
 	/**
 	 * @test
 	 */
-	public function runTest() {
+	public function authenticationTest() {
 		$successToken = SuccessToken::register(SuccessToken::class);
 		$noCredentialToken = NoCredentialToken::register(NoCredentialToken::class);
 		$failingToken = FailingToken::register(FailingToken::class);
@@ -69,5 +76,30 @@ class AuthenticationManagerTest extends UnitTestCase {
 
 		$this->assertTrue($this->authenticationManager->hasRole('Admin'));
 		$this->assertTrue($this->authenticationManager->hasRole('RoleBySession'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function logoutTokensTest() {
+		$successToken = SuccessToken::register(SuccessToken::class);
+		$noCredentialToken = NoCredentialToken::register(NoCredentialToken::class);
+		$failingToken = FailingToken::register(FailingToken::class);
+		$reconstructedBySessionToken = SessionExistsToken::register(SessionExistsToken::class);
+		$notReconstructedBySessionToken = SessionNotExistsToken::register(SessionNotExistsToken::class);
+
+		$this->authenticationManager->run();
+		$this->assertTrue($this->authenticationManager->hasRole('Admin'));
+		$this->assertTrue($this->authenticationManager->hasRole('RoleBySession'));
+
+		$this->authenticationManager
+			->logout($successToken)
+			->logout($noCredentialToken)
+			->logout($failingToken)
+			->logout($reconstructedBySessionToken)
+			->logout($notReconstructedBySessionToken);
+
+		$this->assertFalse($this->authenticationManager->hasRole('Admin'));
+		$this->assertFalse($this->authenticationManager->hasRole('RoleBySession'));
 	}
 }
