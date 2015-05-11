@@ -53,7 +53,7 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	public function getAccounts() {
 		$accounts = new ArrayCollection();
 		/** @var TokenInterface $token */
-		foreach($this->getTokens() as $token){
+		foreach ($this->getTokens() as $token) {
 			if ($token->getCredential()->getAccount() !== NULL) {
 				$accounts->add($token->getCredential()->getAccount());
 			}
@@ -67,9 +67,9 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	public function getRoles() {
 		$roles = new ArrayCollection();
 		/** @var AccountInterface $account */
-		foreach($this->getAccounts() as $account){
+		foreach ($this->getAccounts() as $account) {
 			/** @var RoleInterface $role */
-			foreach($account->getRoles() as $role){
+			foreach ($account->getRoles() as $role) {
 				if (!$roles->contains($role)) {
 					$roles->add($role);
 				}
@@ -83,7 +83,7 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	 * @return boolean
 	 */
 	public function hasRole($role) {
-		return (boolean)$this->getRoles()->filter(function(RoleInterface $existingRole) use ($role){
+		return (boolean)$this->getRoles()->filter(function (RoleInterface $existingRole) use ($role) {
 			return $existingRole->getName() === $role;
 		})->count();
 	}
