@@ -37,4 +37,10 @@ class SessionExistsToken extends AbstractSessionToken {
 		$account->addRole($role);
 		return $account;
 	}
+
+	/**
+	 * @return void
+	 */
+	public function clearSession() {
+	}
 }
