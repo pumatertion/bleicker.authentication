@@ -29,4 +29,10 @@ interface AuthenticationManagerInterface {
 	 * @return Collection
 	 */
 	public function getRoles();
+
+	/**
+	 * @param string $role
+	 * @return boolean
+	 */
+	public function hasRole($role);
 }

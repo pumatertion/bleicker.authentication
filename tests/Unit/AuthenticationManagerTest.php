@@ -66,5 +66,8 @@ class AuthenticationManagerTest extends UnitTestCase {
 		$this->assertEquals(2, $this->authenticationManager->getRoles()->count());
 		$this->assertEquals('Admin', $this->authenticationManager->getRoles()->first()->getName());
 		$this->assertEquals('RoleBySession', $this->authenticationManager->getRoles()->next()->getName());
+
+		$this->assertTrue($this->authenticationManager->hasRole('Admin'));
+		$this->assertTrue($this->authenticationManager->hasRole('RoleBySession'));
 	}
 }

@@ -70,6 +70,16 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	}
 
 	/**
+	 * @param string $role
+	 * @return boolean
+	 */
+	public function hasRole($role) {
+		return (boolean)$this->getRoles()->filter(function(RoleInterface $existingRole) use ($role){
+			return $existingRole->getName() === $role;
+		})->count();
+	}
+
+	/**
 	 * @return $this
 	 */
 	public function run() {
