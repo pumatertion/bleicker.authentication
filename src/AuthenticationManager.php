@@ -2,10 +2,15 @@
 
 namespace Bleicker\Authentication;
 
+use Bleicker\Account\AccountInterface;
+use Bleicker\Account\RoleInterface;
 use Bleicker\ObjectManager\ObjectManager;
-use Bleicker\Token\TokensInterface;
-use Bleicker\Token\Tokens;
 use Bleicker\Token\TokenInterface;
+use Bleicker\Token\Tokens;
+use Bleicker\Token\TokensInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 /**
  * Class AuthenticationManager
  *
@@ -18,8 +23,8 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	 */
 	protected $tokens;
 
-	public function __construct(){
-		$this->tokens = ObjectManager::get(TokensInterface::class, function(){
+	public function __construct() {
+		$this->tokens = ObjectManager::get(TokensInterface::class, function () {
 			$tokens = new Tokens();
 			ObjectManager::add(TokensInterface::class, $tokens, TRUE);
 			return $tokens;
@@ -27,10 +32,41 @@ class AuthenticationManager implements AuthenticationManagerInterface {
 	}
 
 	/**
-	 * @return TokensInterface
+	 * @return Collection
 	 */
 	public function getTokens() {
-		return $this->tokens;
+		return new ArrayCollection($this->tokens->storage());
+	}
+
+	/**
+	 * @return Collection
+	 */
+	public function getAccounts() {
+		$accounts = new ArrayCollection();
+		/** @var TokenInterface $token */
+		foreach($this->getTokens() as $token){
+			if ($token->getCredential()->getAccount() !== NULL) {
+				$accounts->add($token->getCredential()->getAccount());
+			}
+		}
+		return $accounts;
+	}
+
+	/**
+	 * @return Collection
+	 */
+	public function getRoles() {
+		$roles = new ArrayCollection();
+		/** @var AccountInterface $account */
+		foreach($this->getAccounts() as $account){
+			/** @var RoleInterface $role */
+			foreach($account->getRoles() as $role){
+				if (!$roles->contains($role)) {
+					$roles->add($role);
+				}
+			}
+		}
+		return $roles;
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 namespace Tests\Bleicker\Authentication\Unit\Fixtures;
 
+use Bleicker\Account\Account;
 use Bleicker\Token\AbstractToken;
 
 /**
@@ -12,15 +13,18 @@ use Bleicker\Token\AbstractToken;
 class NoCredentialToken extends AbstractToken {
 
 	/**
-	 * @return void
+	 * @return $this
 	 */
 	public function injectCredential() {
+		$this->getCredential()->setValue();
+		return $this;
 	}
 
 	/**
-	 * @return boolean
+	 * @return $this
 	 */
-	public function isCredentialValid() {
-		return $this->getCredential() === 'foo';
+	public function fetchAndSetAccount() {
+		$this->getCredential()->setAccount(new Account('john'));
+		return $this;
 	}
 }
