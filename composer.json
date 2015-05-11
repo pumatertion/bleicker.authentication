@@ -2,7 +2,7 @@
 	"name": "bleicker/authentication",
 	"type": "library",
 	"require": {
-		"bleicker/token": "2.1.*",
+		"bleicker/token": "2.2.*",
 		"bleicker/session": "1.0.*",
 		"doctrine/collections": "~1.2"
 	},

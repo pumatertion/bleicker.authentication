@@ -1,6 +1,7 @@
 <?php
 namespace Bleicker\Authentication;
 
+use Bleicker\Token\TokenInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -35,4 +36,10 @@ interface AuthenticationManagerInterface {
 	 * @return boolean
 	 */
 	public function hasRole($role);
+
+	/**
+	 * @param TokenInterface $token
+	 * @return $this
+	 */
+	public function logout(TokenInterface $token);
 }

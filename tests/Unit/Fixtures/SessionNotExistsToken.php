@@ -32,4 +32,10 @@ class SessionNotExistsToken extends AbstractSessionToken {
 	public function reconstituteAccountFromSession() {
 		return NULL;
 	}
+
+	/**
+	 * @return void
+	 */
+	public function clearSession() {
+	}
 }
